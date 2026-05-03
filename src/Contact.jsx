@@ -33,7 +33,7 @@ export const sendContactForm = createAsyncThunk(
 );
 
 const INFO_ITEMS = [
-  { label: "Email", value: "saood@example.com", prefix: "→ " },
+  { label: "Email", value: "saoodalamcse2018@gmail.com", prefix: "→ " },
   { label: "Location", value: "India — Remote Friendly", prefix: "→ " },
   { label: "Availability", value: "Open to work", prefix: "→ " },
   { label: "Response", value: "Within 24 hours", prefix: "→ " },
