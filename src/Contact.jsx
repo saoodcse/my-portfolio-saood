@@ -86,9 +86,6 @@ export default function Contact() {
   const [snackbar, setSnackbar] = useState({ open: false, type: "success", msg: "" });
 
   const validate = () => {
-    useEffect(() => {
-    document.title = "Contact";
-  }, []);
 
     const e = {};
     if (!form.name.trim() || form.name.trim().length < 2)
@@ -345,7 +342,7 @@ export default function Contact() {
         open={snackbar.open}
         autoHideDuration={5000}
         onClose={() => setSnackbar((s) => ({ ...s, open: false }))}
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        anchorOrigin={{ vertical: "center", horizontal: "center" }}
       >
         <Alert
           severity={snackbar.type}
