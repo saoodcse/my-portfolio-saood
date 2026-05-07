@@ -478,6 +478,47 @@ export const getCertifications = () =>
     )
   );
 
+  export const getHomeData = () =>
+  new Promise((resolve) =>
+    setTimeout(() =>
+      resolve({
+        name:     "Saood Alam",
+        initials: "SA",
+        role:     "Senior Software Engineer",
+        tagline:  "Java · Kotlin · Python · Fintech",
+        location: "Mumbai, India",
+        status:   "OPEN TO WORK",
+        bio:      "Senior SDE with 3.6+ years building high-throughput fintech systems at ICICI Bank, NIUM & Axis Bank. Architected cross-border payout infrastructure handling 10K+ daily transactions with sub-3s SLA on PCI DSS compliant platforms.",
+        social: {
+          github:   "https://github.com/saoodcse",
+          linkedin: "https://www.linkedin.com/in/saoodcse/",
+          email:    "mailto:saoodalamcse2018@gmail.com",
+        },
+        stats: [
+          { value: "3.6+", label: "Years Experience" },
+          { value: "20+",  label: "APIs Built"        },
+          { value: "10K+", label: "Txns / Day"        },
+          { value: "3",    label: "Companies"         },
+        ],
+        skills: [
+          "Java", "Kotlin", "Python", "Spring Boot",
+          "Microservices", "REST APIs", "Kafka", "Redis",
+          "Docker", "Kubernetes", "AWS", "PostgreSQL",
+        ],
+        terminal: [
+          { cmd: "$ whoami",   val: "saood_alam"             },
+          { cmd: "$ company",  val: "ICICI Bank (current)"   },
+          { cmd: "$ prev",     val: "NIUM · Axis Bank"       },
+          { cmd: "$ stack",    val: "java | kotlin | python"  },
+          { cmd: "$ domain",   val: "fintech | payments"     },
+          { cmd: "$ location", val: "Mumbai, India"          },
+          { cmd: "$ status",   val: "open_to_work ✓"         },
+        ],
+      }),
+      750
+    )
+  );
+
 // ─── Contact ─────────────────────────────────────────────────────
 export const submitContact = (formData) =>
   new Promise((resolve) =>

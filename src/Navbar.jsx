@@ -52,7 +52,7 @@ export default function Navbar() {
           <Box component={Link} to="/" sx={{ display:"flex", alignItems:"center", gap:1, textDecoration:"none", flexGrow:1 }}>
             <CodeIcon sx={{ color:"primary.main", fontSize:20 }} />
             <Typography sx={{ color:"text.primary", fontWeight:500, letterSpacing:"0.1em", fontSize:"0.85rem", fontFamily:"'DM Mono',monospace" }}>
-              SA<span style={{ color:"#00E5FF" }}>_</span>dev
+              SAOOD<span style={{ color:"#00E5FF" }}>_</span>DEV
             </Typography>
           </Box>
 
@@ -92,16 +92,16 @@ export default function Navbar() {
 
       {/* Mobile Drawer */}
       <Drawer anchor="right" open={drawerOpen} onClose={() => setDrawerOpen(false)}
-        PaperProps={{ sx: { width:280, background:"#0D1B2A", borderLeft:"1px solid rgba(0,229,255,0.12)", borderTopLeftRadius:"12px", borderBottomLeftRadius:"12px" } }}>
+        PaperProps={{ sx: { width:280, background:"hsla(210, 38%, 32%, 0.91)", borderLeft:"1px solid rgba(0,229,255,0.12)", borderTopLeftRadius:"12px", borderBottomLeftRadius:"12px" } }}>
         <Box sx={{ p:2, display:"flex", justifyContent:"space-between", alignItems:"center", borderBottom:"1px solid rgba(0,229,255,0.08)" }}>
           <Typography sx={{ color:"primary.main", fontSize:"0.75rem", fontFamily:"'DM Mono',monospace", letterSpacing:"0.1em" }}>
-            SA_dev
+            SAOOD_DEV
           </Typography>
           <IconButton onClick={() => setDrawerOpen(false)} sx={{ color:"text.secondary" }}>
             <CloseIcon fontSize="small" />
           </IconButton>
         </Box>
-        <List sx={{ px:1.5, pt:1 }}>
+        <List sx={{ px:1.5, pt:1, background: "white"}}>
           {[...NAV_LINKS, { label:"Contact", path:"/contact" }].map((link) => (
             <ListItem key={link.path} component={Link} to={link.path}
               onClick={() => setDrawerOpen(false)}

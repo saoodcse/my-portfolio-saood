@@ -56,6 +56,56 @@ const SOFT_SKILLS = [
   "Production Support",
 ];
 
+
+
+const SectionHeader = ({ tag, title, accent }) => (
+  <Box sx={{ mb: 8 }}>
+    <Typography
+      sx={{
+        color: "primary.main",
+        fontSize: "0.72rem",
+        letterSpacing: "0.2em",
+        textTransform: "uppercase",
+        mb: 1,
+        fontFamily: "'DM Mono',monospace",
+      }}
+    >
+      {tag}
+    </Typography>
+
+    <Typography
+      variant="h2"
+      sx={{
+        fontSize: { xs: "2.2rem", md: "3rem" },
+        color: "text.primary",
+        mb: 2,
+      }}
+    >
+      {title}{" "}
+      <Box
+        component="span"
+        sx={{
+          background: "linear-gradient(135deg,#00E5FF,#0091EA)",
+          backgroundClip: "text",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+        }}
+      >
+        {accent}
+      </Box>
+    </Typography>
+
+    <Box
+      sx={{
+        width: 48,
+        height: 2,
+        background: "linear-gradient(90deg,#00E5FF,transparent)",
+      }}
+    />
+  </Box>
+);
+
+
 function SectionLabel({ children }) {
   return (
     <Typography
@@ -85,49 +135,12 @@ function SectionLabel({ children }) {
 
 export default function About() {
   return (
-    <Box sx={{ py: { xs: 6, md: 10 } }}>
+    <Box sx={{ py: { xs: 2, md: 3 } }}>
       <Container maxWidth="lg">
 
+        <SectionHeader title= "The Developer" accent= " Behind the Code"> </SectionHeader>
         {/* HEADER */}
-        <Box sx={{ mb: 8 }}>
-          <Typography
-            sx={{
-              color: "primary.main",
-              fontSize: "0.72rem",
-              letterSpacing: "0.2em",
-              textTransform: "uppercase",
-              mb: 1,
-              fontFamily: "'DM Mono', monospace",
-            }}
-          >
-            // 02. about
-          </Typography>
-
-          <Typography
-            variant="h2"
-            sx={{
-              fontSize: { xs: "2.4rem", md: "3.2rem" },
-              color: "text.primary",
-              mb: 1,
-              lineHeight: 1.1,
-            }}
-          >
-            The Developer{" "}
-            <Box
-              component="span"
-              sx={{
-                background:
-                  "linear-gradient(135deg,#00E5FF,#0091EA)",
-                backgroundClip: "text",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-              }}
-            >
-              Behind the Code
-            </Box>
-          </Typography>
-        </Box>
-
+      
         {/* ROW 1 */}
         <Box
           sx={{

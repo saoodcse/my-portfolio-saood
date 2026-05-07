@@ -33,7 +33,7 @@ export default function MainLayout() {
             <Typography sx={{ color:"text.secondary", fontSize:"0.72rem", fontFamily:"'DM Mono',monospace" }}>
               © {new Date().getFullYear()}{" "}
               <Box component="span" sx={{ color:"primary.main" }}>Saood Alam</Box>
-              {" "}— Senior SDE · ICICI Bank · Mumbai
+              {" "}— Senior SDE · Mumbai
             </Typography>
             <Box sx={{ display:"flex", gap:0.5 }}>
               {[
