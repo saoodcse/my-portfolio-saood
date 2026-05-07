@@ -14,7 +14,7 @@ import OpenSource    from "./OpenSource";
 import Services      from "./Services";
 import Certifications from "./Certifications";
 import Contact       from "./Contact";
-import Documents     from "./Resume";
+import Documents     from ".resume";
 
 const theme = createTheme({
   palette: {
