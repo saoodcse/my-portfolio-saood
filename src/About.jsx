@@ -3,274 +3,495 @@ import {
   Box,
   Container,
   Typography,
-  Grid,
-  Divider,
-  LinearProgress,
+  Chip,
 } from "@mui/material";
 
-const TECH_STACK = [
-  { category: "Backend Frameworks", items: ["Spring Boot", "FastAPI", "Django REST"], color: "#00E5FF" },
-  { category: "Databases", items: ["MySQL", "PostgreSQL", "Redis", "MongoDB"], color: "#FF6D00" },
-  { category: "Architecture", items: ["Microservices", "REST APIs", "Event-Driven", "CQRS"], color: "#00E5FF" },
-  { category: "DevOps & Tools", items: ["Docker", "Kafka", "RabbitMQ", "Git"], color: "#FF6D00" },
+const BIO_HIGHLIGHTS = [
+  { icon: "🏦", label: "Current", value: "ICICI Bank — Senior SDE" },
+  { icon: "🌍", label: "Domain", value: "Fintech · Payments · Banking" },
+  { icon: "📍", label: "Location", value: "Mumbai, Maharashtra, India" },
+  { icon: "🎓", label: "Education", value: "B.Tech CSE — CGPA 8.02" },
+  { icon: "📧", label: "Email", value: "saoodalamcse2018@gmail.com" },
+  { icon: "🔗", label: "LinkedIn", value: "linkedin.com/in/saoodcse" },
 ];
 
 const SKILLS_PROGRESS = [
-  { name: "Java / Spring Boot", level: 90 },
-  { name: "Python / FastAPI", level: 85 },
-  { name: "MySQL & Database Design", level: 82 },
-  { name: "Microservices Architecture", level: 78 },
-  { name: "Docker & Containerization", level: 70 },
+  { name: "Java / Spring Boot", level: 92, color: "#00E5FF" },
+  { name: "Kotlin / Spring Boot", level: 85, color: "#7F52FF" },
+  { name: "Microservices & Dist. Systems", level: 88, color: "#00E5FF" },
+  { name: "AWS / Docker / Kubernetes", level: 78, color: "#FF9900" },
+  { name: "Python / FastAPI", level: 72, color: "#3776AB" },
+  { name: "MySQL & PostgreSQL", level: 83, color: "#FF6D00" },
 ];
 
-const EXPERIENCE = [
+const TECH_STACK = [
   {
-    role: "Backend Developer",
-    company: "Tech Startup",
-    period: "2022 – Present",
-    desc: "Built scalable REST APIs using Spring Boot and FastAPI. Designed MySQL schemas for high-traffic systems.",
+    category: "Languages",
+    items: ["Java", "Kotlin", "Python", "SQL"],
+    color: "#00E5FF",
   },
   {
-    role: "Junior Java Developer",
-    company: "Software House",
-    period: "2021 – 2022",
-    desc: "Maintained legacy monolith and led gradual migration to microservices architecture.",
+    category: "Frameworks",
+    items: ["Spring Boot", "FastAPI", "JUnit", "Mockito"],
+    color: "#FF6D00",
+  },
+  {
+    category: "Databases",
+    items: ["MySQL", "PostgreSQL", "Redis"],
+    color: "#00E5FF",
+  },
+  {
+    category: "DevOps",
+    items: ["Docker", "Kubernetes", "AWS", "CI/CD"],
+    color: "#FF6D00",
   },
 ];
+
+const SOFT_SKILLS = [
+  "System Design",
+  "Leadership",
+  "Problem Solving",
+  "Code Review",
+  "Agile",
+  "Production Support",
+];
+
+function SectionLabel({ children }) {
+  return (
+    <Typography
+      sx={{
+        color: "text.secondary",
+        fontSize: "0.65rem",
+        letterSpacing: "0.18em",
+        textTransform: "uppercase",
+        mb: 2,
+        fontFamily: "'DM Mono', monospace",
+        display: "flex",
+        alignItems: "center",
+        gap: 1,
+        "&::before": {
+          content: '""',
+          width: 16,
+          height: 1,
+          background: "rgba(0,229,255,0.4)",
+          display: "inline-block",
+        },
+      }}
+    >
+      {children}
+    </Typography>
+  );
+}
 
 export default function About() {
   return (
-    <Box sx={{ py: { xs: 2, md: 3 } }}>
+    <Box sx={{ py: { xs: 6, md: 10 } }}>
       <Container maxWidth="lg">
-        {/* Header */}
+
+        {/* HEADER */}
         <Box sx={{ mb: 8 }}>
+          <Typography
+            sx={{
+              color: "primary.main",
+              fontSize: "0.72rem",
+              letterSpacing: "0.2em",
+              textTransform: "uppercase",
+              mb: 1,
+              fontFamily: "'DM Mono', monospace",
+            }}
+          >
+            // 02. about
+          </Typography>
+
           <Typography
             variant="h2"
             sx={{
-              fontSize: { xs: "2.2rem", md: "3rem" },
+              fontSize: { xs: "2.4rem", md: "3.2rem" },
               color: "text.primary",
-              mb: 2,
+              mb: 1,
+              lineHeight: 1.1,
             }}
           >
-            Backend{" "}
+            The Developer{" "}
             <Box
               component="span"
               sx={{
-                background: "linear-gradient(135deg, #00E5FF, #0091EA)",
+                background:
+                  "linear-gradient(135deg,#00E5FF,#0091EA)",
                 backgroundClip: "text",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
               }}
             >
-              Architect
+              Behind the Code
             </Box>
           </Typography>
-          <Box
-            sx={{
-              width: 48,
-              height: 2,
-              background: "linear-gradient(90deg, #00E5FF, transparent)",
-            }}
-          />
         </Box>
 
-        <Grid container spacing={6}>
-          {/* Left - Bio */}
-          <Grid item xs={12} md={6}>
+        {/* ROW 1 */}
+        <Box
+          sx={{
+            display: "flex",
+            gap: 4,
+            mb: 8,
+            flexDirection: { xs: "column", md: "row" },
+            alignItems: "stretch",
+          }}
+        >
+
+          {/* LEFT BIO */}
+          <Box
+            sx={{
+              flex: 1,
+              p: 3,
+              border: "1px solid rgba(0,229,255,0.1)",
+              background: "rgba(13,27,42,0.6)",
+              borderRadius: "2px",
+            }}
+          >
+            <SectionLabel>Bio</SectionLabel>
+
             <Typography
-              variant="body1"
-              sx={{ color: "text.secondary", mb: 3, lineHeight: 1.9, fontSize: "0.92rem" }}
+              sx={{
+                color: "text.secondary",
+                lineHeight: 2,
+                mb: 2,
+                fontFamily: "'DM Mono', monospace",
+              }}
             >
-              I'm a backend-focused engineer with a passion for building systems
-              that scale. My expertise lies in crafting clean, performant APIs
-              and designing distributed architectures that handle real-world load.
-            </Typography>
-            <Typography
-              variant="body1"
-              sx={{ color: "text.secondary", mb: 4, lineHeight: 1.9, fontSize: "0.92rem" }}
-            >
-              I primarily work with{" "}
-              <Box component="span" sx={{ color: "primary.main" }}>Spring Boot</Box>{" "}
-              for enterprise Java services and{" "}
-              <Box component="span" sx={{ color: "primary.main" }}>FastAPI</Box>{" "}
-              for high-performance Python APIs. I design{" "}
-              <Box component="span" sx={{ color: "primary.main" }}>MySQL</Box>{" "}
-              schemas for complex data models and architect{" "}
-              <Box component="span" sx={{ color: "primary.main" }}>Microservices</Box>{" "}
-              systems with clean service boundaries and fault tolerance.
+              I'm a{" "}
+              <Box component="span" sx={{ color: "primary.main" }}>
+                Senior Software Engineer
+              </Box>{" "}
+              with strong backend expertise in fintech and banking systems.
             </Typography>
 
-            {/* Skills Progress */}
-            <Box sx={{ display: "flex", flexDirection: "column", gap: 2.5 }}>
-              {SKILLS_PROGRESS.map(({ name, level }) => (
+            <Typography
+              sx={{
+                color: "text.secondary",
+                lineHeight: 2,
+                mb: 2,
+                fontFamily: "'DM Mono', monospace",
+              }}
+            >
+              Currently working at{" "}
+              <Box component="span" sx={{ color: "#00E5FF" }}>
+                ICICI Bank
+              </Box>{" "}
+              building scalable and secure financial systems.
+            </Typography>
+
+            <Typography
+              sx={{
+                color: "text.secondary",
+                lineHeight: 2,
+                fontFamily: "'DM Mono', monospace",
+              }}
+            >
+              Experienced in microservices, event-driven architecture,
+              distributed systems, APIs, Kafka, Docker, Kubernetes,
+              AWS, and high-performance backend engineering.
+            </Typography>
+
+            <Box sx={{ mt: 4 }}>
+              <SectionLabel>Soft Skills</SectionLabel>
+
+              <Box
+                sx={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: 1,
+                }}
+              >
+                {SOFT_SKILLS.map((skill) => (
+                  <Chip
+                    key={skill}
+                    label={skill}
+                    size="small"
+                    sx={{
+                      background: "rgba(255,109,0,0.08)",
+                      border: "1px solid rgba(255,109,0,0.18)",
+                      color: "#FF6D00",
+                    }}
+                  />
+                ))}
+              </Box>
+            </Box>
+          </Box>
+
+          {/* RIGHT PHOTO */}
+          <Box
+            sx={{
+              width: { xs: "100%", md: "340px" },
+              border: "1px solid rgba(0,229,255,0.15)",
+              background: "rgba(13,27,42,0.7)",
+              borderRadius: "2px",
+              overflow: "hidden",
+            }}
+          >
+            <Box
+              sx={{
+                height: "100%",
+                minHeight: 420,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                background:
+                  "linear-gradient(160deg, rgba(0,229,255,0.06), rgba(5,10,18,0.95))",
+              }}
+            >
+              <Box
+                sx={{
+                  width: 110,
+                  height: 110,
+                  borderRadius: "50%",
+                  background:
+                    "linear-gradient(135deg, rgba(0,229,255,0.18), rgba(0,145,234,0.1))",
+                  border: "2px solid rgba(0,229,255,0.35)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: "2rem",
+                  color: "primary.main",
+                  fontWeight: 700,
+                  fontFamily: "'DM Mono', monospace",
+                  mb: 2,
+                }}
+              >
+                SA
+              </Box>
+
+              <Typography
+                sx={{
+                  color: "text.primary",
+                  fontSize: "1rem",
+                  fontWeight: 700,
+                  fontFamily: "'DM Mono', monospace",
+                }}
+              >
+                Saood Alam
+              </Typography>
+
+              <Typography
+                sx={{
+                  color: "primary.main",
+                  fontSize: "0.7rem",
+                  mt: 1,
+                  fontFamily: "'DM Mono', monospace",
+                }}
+              >
+                @saoodcse
+              </Typography>
+            </Box>
+          </Box>
+        </Box>
+
+        {/* ROW 2 */}
+        <Box
+          sx={{
+            display: "flex",
+            gap: 4,
+            mb: 8,
+            flexDirection: { xs: "column", md: "row" },
+            alignItems: "stretch",
+          }}
+        >
+
+          {/* QUICK INFO */}
+          <Box
+            sx={{
+              flex: 1,
+              p: 3,
+              border: "1px solid rgba(0,229,255,0.1)",
+              background: "rgba(13,27,42,0.6)",
+              borderRadius: "2px",
+            }}
+          >
+            <SectionLabel>Quick Info</SectionLabel>
+
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 2,
+              }}
+            >
+              {BIO_HIGHLIGHTS.map(({ icon, label, value }) => (
+                <Box
+                  key={label}
+                  sx={{
+                    display: "flex",
+                    gap: 1.5,
+                    pb: 1.5,
+                    borderBottom:
+                      "1px solid rgba(0,229,255,0.05)",
+                  }}
+                >
+                  <Typography>{icon}</Typography>
+
+                  <Box>
+                    <Typography
+                      sx={{
+                        color: "text.secondary",
+                        fontSize: "0.65rem",
+                        textTransform: "uppercase",
+                        mb: 0.3,
+                        fontFamily: "'DM Mono', monospace",
+                      }}
+                    >
+                      {label}
+                    </Typography>
+
+                    <Typography
+                      sx={{
+                        color: "text.primary",
+                        fontSize: "0.8rem",
+                        fontFamily: "'DM Mono', monospace",
+                      }}
+                    >
+                      {value}
+                    </Typography>
+                  </Box>
+                </Box>
+              ))}
+            </Box>
+          </Box>
+
+          {/* PROFICIENCY */}
+          <Box
+            sx={{
+              flex: 1,
+              p: 3,
+              border: "1px solid rgba(0,229,255,0.1)",
+              background: "rgba(13,27,42,0.6)",
+              borderRadius: "2px",
+            }}
+          >
+            <SectionLabel>Proficiency</SectionLabel>
+
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 3,
+              }}
+            >
+              {SKILLS_PROGRESS.map(({ name, level, color }) => (
                 <Box key={name}>
                   <Box
                     sx={{
                       display: "flex",
                       justifyContent: "space-between",
-                      mb: 0.8,
+                      mb: 1,
                     }}
                   >
                     <Typography
-                      variant="body2"
-                      sx={{ color: "text.secondary", fontSize: "0.75rem", letterSpacing: "0.06em" }}
+                      sx={{
+                        color: "text.secondary",
+                        fontSize: "0.75rem",
+                        fontFamily: "'DM Mono', monospace",
+                      }}
                     >
                       {name}
                     </Typography>
+
                     <Typography
-                      variant="body2"
-                      sx={{ color: "primary.main", fontSize: "0.72rem" }}
+                      sx={{
+                        color,
+                        fontSize: "0.72rem",
+                        fontFamily: "'DM Mono', monospace",
+                      }}
                     >
                       {level}%
                     </Typography>
                   </Box>
-                  <LinearProgress
-                    variant="determinate"
-                    value={level}
-                    sx={{
-                      height: 2,
-                      borderRadius: 1,
-                      background: "rgba(0, 229, 255, 0.08)",
-                      "& .MuiLinearProgress-bar": {
-                        background: "linear-gradient(90deg, #00E5FF, #0091EA)",
-                        borderRadius: 1,
-                      },
-                    }}
-                  />
-                </Box>
-              ))}
-            </Box>
-          </Grid>
 
-          {/* Right - Tech & Experience */}
-          <Grid item xs={12} md={6}>
-            {/* Tech Stack Grid */}
-            <Box sx={{ mb: 5 }}>
-              <Typography
-                variant="body2"
-                sx={{
-                  color: "text.secondary",
-                  fontSize: "0.72rem",
-                  letterSpacing: "0.15em",
-                  textTransform: "uppercase",
-                  mb: 2.5,
-                }}
-              >
-                Tech Stack
-              </Typography>
-              <Grid container spacing={2}>
-                {TECH_STACK.map(({ category, items, color }) => (
-                  <Grid item xs={12} sm={6} key={category}>
+                  <Box
+                    sx={{
+                      height: 5,
+                      borderRadius: 10,
+                      background: "rgba(0,229,255,0.06)",
+                      overflow: "hidden",
+                    }}
+                  >
                     <Box
                       sx={{
-                        p: 2.5,
-                        border: "1px solid rgba(0, 229, 255, 0.08)",
-                        borderRadius: "2px",
-                        background: "rgba(13, 27, 42, 0.5)",
+                        width: `${level}%`,
                         height: "100%",
-                        "&:hover": {
-                          border: "1px solid rgba(0, 229, 255, 0.2)",
-                          background: "rgba(0, 229, 255, 0.03)",
-                        },
-                        transition: "all 0.25s ease",
+                        background: `linear-gradient(90deg, ${color}, ${color}88)`,
                       }}
-                    >
-                      <Typography
-                        variant="body2"
-                        sx={{
-                          color,
-                          fontSize: "0.68rem",
-                          letterSpacing: "0.1em",
-                          textTransform: "uppercase",
-                          mb: 1.5,
-                        }}
-                      >
-                        {category}
-                      </Typography>
-                      {items.map((item) => (
-                        <Typography
-                          key={item}
-                          variant="body2"
-                          sx={{
-                            color: "text.secondary",
-                            fontSize: "0.8rem",
-                            mb: 0.4,
-                            "&::before": {
-                              content: '"→ "',
-                              color: color + "66",
-                            },
-                          }}
-                        >
-                          {item}
-                        </Typography>
-                      ))}
-                    </Box>
-                  </Grid>
-                ))}
-              </Grid>
-            </Box>
-
-            <Divider sx={{ borderColor: "rgba(0, 229, 255, 0.08)", mb: 3 }} />
-
-            {/* Experience */}
-            <Typography
-              variant="body2"
-              sx={{
-                color: "text.secondary",
-                fontSize: "0.72rem",
-                letterSpacing: "0.15em",
-                textTransform: "uppercase",
-                mb: 2.5,
-              }}
-            >
-              Experience
-            </Typography>
-            <Box sx={{ display: "flex", flexDirection: "column", gap: 2.5 }}>
-              {EXPERIENCE.map(({ role, company, period, desc }) => (
-                <Box
-                  key={role}
-                  sx={{
-                    pl: 2,
-                    borderLeft: "2px solid rgba(0, 229, 255, 0.2)",
-                    "&:hover": {
-                      borderLeftColor: "primary.main",
-                    },
-                    transition: "border-color 0.2s ease",
-                  }}
-                >
-                  <Box
-                    sx={{ display: "flex", justifyContent: "space-between", mb: 0.3, flexWrap: "wrap", gap: 0.5 }}
-                  >
-                    <Typography
-                      variant="body1"
-                      sx={{ color: "text.primary", fontWeight: 500, fontSize: "0.88rem" }}
-                    >
-                      {role}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      sx={{ color: "primary.main", fontSize: "0.7rem", letterSpacing: "0.08em" }}
-                    >
-                      {period}
-                    </Typography>
+                    />
                   </Box>
-                  <Typography
-                    variant="body2"
-                    sx={{ color: "#FF6D00", fontSize: "0.75rem", mb: 0.8 }}
-                  >
-                    {company}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    sx={{ color: "text.secondary", fontSize: "0.8rem", lineHeight: 1.7 }}
-                  >
-                    {desc}
-                  </Typography>
                 </Box>
               ))}
             </Box>
-          </Grid>
-        </Grid>
+          </Box>
+        </Box>
+
+        {/* TECH STACK */}
+        <Box>
+          <SectionLabel>Tech Stack</SectionLabel>
+
+          <Box
+            sx={{
+              display: "flex",
+              flexWrap: "wrap",
+              gap: 2,
+            }}
+          >
+            {TECH_STACK.map(({ category, items, color }) => (
+              <Box
+                key={category}
+                sx={{
+                  flex: {
+                    xs: "1 1 100%",
+                    sm: "1 1 calc(50% - 8px)",
+                  },
+                  p: 2,
+                  border: "1px solid rgba(0,229,255,0.08)",
+                  background: "rgba(13,27,42,0.5)",
+                  borderRadius: "2px",
+                }}
+              >
+                <Typography
+                  sx={{
+                    color,
+                    fontSize: "0.7rem",
+                    textTransform: "uppercase",
+                    mb: 1.5,
+                    fontFamily: "'DM Mono', monospace",
+                  }}
+                >
+                  {category}
+                </Typography>
+
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    gap: 0.8,
+                  }}
+                >
+                  {items.map((item) => (
+                    <Chip
+                      key={item}
+                      label={item}
+                      size="small"
+                      sx={{
+                        background: `${color}0D`,
+                        border: `1px solid ${color}25`,
+                        color: "text.secondary",
+                        fontSize: "0.63rem",
+                      }}
+                    />
+                  ))}
+                </Box>
+              </Box>
+            ))}
+          </Box>
+        </Box>
+
       </Container>
     </Box>
   );

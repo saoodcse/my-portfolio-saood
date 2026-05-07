@@ -1,41 +1,21 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getProjects } from "./api";
+import { getProjects } from "../api";
 
-export const fetchProjects = createAsyncThunk(
-  "projects/fetchAll",
+export const fetchProjects = createAsyncThunk("projects/fetchAll",
   async (_, { rejectWithValue }) => {
-    try {
-      const data = await getProjects();
-      return data;
-    } catch (err) {
-      return rejectWithValue(err.message || "Failed to fetch projects");
-    }
+    try { return await getProjects(); }
+    catch (e) { return rejectWithValue(e.message); }
   }
 );
 
-const projectSlice = createSlice({
+const s = createSlice({
   name: "projects",
-  initialState: {
-    data: [],
-    loading: false,
-    error: null,
-  },
+  initialState: { data: [], loading: false, error: null },
   reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchProjects.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(fetchProjects.fulfilled, (state, action) => {
-        state.loading = false;
-        state.data = action.payload;
-      })
-      .addCase(fetchProjects.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload || "Something went wrong";
-      });
+  extraReducers: (b) => {
+    b.addCase(fetchProjects.pending,   (s) => { s.loading = true;  s.error = null; })
+     .addCase(fetchProjects.fulfilled, (s, a) => { s.loading = false; s.data = a.payload; })
+     .addCase(fetchProjects.rejected,  (s, a) => { s.loading = false; s.error = a.payload; });
   },
 });
-
-export default projectSlice.reducer;
+export default s.reducer;
