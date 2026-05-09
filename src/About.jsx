@@ -135,7 +135,7 @@ export default function About() {
   {/* ── actual photo ── */}
   <Box
     component="img"
-    src="/src/photo/profilephoto.jpeg"
+    src="/public/photo/profilephoto.jpeg"
     alt="Saood Alam"
     onError={(e) => { e.target.style.display = "none"; }}
     sx={{
