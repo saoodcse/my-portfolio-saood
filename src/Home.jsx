@@ -363,7 +363,7 @@ export default function Home() {
 
                   <Box
                     component="img"
-                    src="/public/photo/profilephoto.jpeg"
+                    src="/photo/profilephoto.jpeg"
                     alt={data.name}
                     onError={(e) => { e.target.style.display = "none"; }}
                     sx={{
