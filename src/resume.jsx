@@ -119,30 +119,6 @@ export default function Documents() {
               Download
             </Button>
           </Grid>
-
-          <Grid item xs={12} md={6}>
-            <TextField
-              fullWidth
-              placeholder="Enter email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              sx={{ mb: 1 }}
-            />
-
-            <Button
-              fullWidth
-              variant="outlined"
-              onClick={handleSendEmail}
-              endIcon={<EmailIcon />}
-              sx={{
-                py: 1.5,
-                borderColor: "#00E5FF",
-                color: "#00E5FF",
-              }}
-            >
-              Email
-            </Button>
-          </Grid>
         </Grid>
 
       </Container>

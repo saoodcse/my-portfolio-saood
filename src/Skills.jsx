@@ -7,6 +7,9 @@ import StorageIcon from "@mui/icons-material/Storage";
 import HubIcon from "@mui/icons-material/Hub";
 import CloudIcon from "@mui/icons-material/Cloud";
 import BuildIcon from "@mui/icons-material/Build";
+import PsychologyIcon from "@mui/icons-material/Psychology";
+import SwapVertIcon  from "@mui/icons-material/SwapVert";
+import VerifiedIcon  from "@mui/icons-material/Verified";
 import { fetchSkills } from "./skillsSlice";
 
 const ICON_MAP = {
@@ -15,7 +18,10 @@ const ICON_MAP = {
   storage: <StorageIcon />,
   hub: <HubIcon />,
   cloud: <CloudIcon />,
-  build: <BuildIcon />
+  build: <BuildIcon />,
+  verified:  <VerifiedIcon />,
+  swap_vert:  <SwapVertIcon />,
+  psychology: <PsychologyIcon />, 
 };
 
 const SectionHeader = ({ tag, title, accent }) => (

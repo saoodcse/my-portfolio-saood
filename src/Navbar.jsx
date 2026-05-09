@@ -20,6 +20,7 @@ const NAV_LINKS = [
   { label: "Services",       path: "/services" },
   { label: "Certifications", path: "/certifications" },
   { label: "Resume",         path: "/resume-cover" },
+  { label:"Contact",         path:"/contact" }
 ];
 
 export default function Navbar() {
@@ -102,7 +103,7 @@ export default function Navbar() {
           </IconButton>
         </Box>
         <List sx={{ px:1.5, pt:1, background: "white"}}>
-          {[...NAV_LINKS, { label:"Contact", path:"/contact" }].map((link) => (
+          {[...NAV_LINKS].map((link) => (
             <ListItem key={link.path} component={Link} to={link.path}
               onClick={() => setDrawerOpen(false)}
               sx={{

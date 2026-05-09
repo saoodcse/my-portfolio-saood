@@ -1,17 +1,17 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector }            from "react-redux";
 import { Link }                                from "react-router-dom";
 import {
-  Box, Container, Typography, Button, Chip,
-  Grid, Skeleton,
+  Box, Container, Typography, Button, Chip, Skeleton,
 } from "@mui/material";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import EmailIcon        from "@mui/icons-material/Email";
-import ArticleIcon      from "@mui/icons-material/Article";
-import GitHubIcon       from "@mui/icons-material/GitHub";
-import LinkedInIcon     from "@mui/icons-material/LinkedIn";
-import EmailOutlined    from "@mui/icons-material/EmailOutlined";
-import LocationOnIcon   from "@mui/icons-material/LocationOn";
+import ArrowForwardIcon  from "@mui/icons-material/ArrowForward";
+import EmailIcon         from "@mui/icons-material/Email";
+import ArticleIcon       from "@mui/icons-material/Article";
+import GitHubIcon        from "@mui/icons-material/GitHub";
+import LinkedInIcon      from "@mui/icons-material/LinkedIn";
+import EmailOutlined     from "@mui/icons-material/EmailOutlined";
+import LocationOnIcon    from "@mui/icons-material/LocationOn";
+import TypingText        from "./utils/TypingText";
 import { fetchHomeData } from "./homeSlice";
 
 /* ── Blinking cursor ─────────────────────────────────────────── */
@@ -28,47 +28,48 @@ function Cursor() {
   );
 }
 
-/* ── Skeleton loader for the right panel ─────────────────────── */
+/* ── Skeletons ───────────────────────────────────────────────── */
 function RightSkeleton() {
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 2.5 }}>
-      <Skeleton variant="rectangular" sx={{ borderRadius: "2px", aspectRatio: "1/1", background: "rgba(0,229,255,0.05)" }} />
+      <Skeleton variant="rectangular" sx={{ borderRadius: "2px", aspectRatio: "3/4", background: "rgba(0,229,255,0.05)" }} />
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1.5 }}>
         {[1,2,3,4].map((i) => (
-          <Skeleton key={i} variant="rectangular" sx={{ flex:"1 1 calc(50% - 12px)", height: 72, borderRadius:"2px", background:"rgba(0,229,255,0.05)" }} />
+          <Skeleton key={i} variant="rectangular" sx={{ flex: "1 1 calc(50% - 12px)", height: 72, borderRadius: "2px", background: "rgba(0,229,255,0.05)" }} />
         ))}
       </Box>
-      <Skeleton variant="rectangular" height={200} sx={{ borderRadius: "2px", background: "rgba(0,229,255,0.05)" }} />
     </Box>
   );
 }
 
-/* ── Skeleton loader for the left panel ─────────────────────── */
 function LeftSkeleton() {
   return (
     <Box>
       <Skeleton width={160} height={28} sx={{ mb: 3, borderRadius: "2px", background: "rgba(0,229,255,0.05)" }} />
-      <Skeleton width="70%"  height={80} sx={{ mb: 1, background: "rgba(0,229,255,0.05)" }} />
-      <Skeleton width="60%"  height={80} sx={{ mb: 2, background: "rgba(0,229,255,0.05)" }} />
-      <Skeleton width="90%"  height={16} sx={{ mb: 1, background: "rgba(0,229,255,0.04)" }} />
-      <Skeleton width="80%"  height={16} sx={{ mb: 4, background: "rgba(0,229,255,0.04)" }} />
+      <Skeleton width="70%" height={80} sx={{ mb: 1, background: "rgba(0,229,255,0.05)" }} />
+      <Skeleton width="60%" height={80} sx={{ mb: 2, background: "rgba(0,229,255,0.05)" }} />
+      <Skeleton width="90%" height={16} sx={{ mb: 1, background: "rgba(0,229,255,0.04)" }} />
+      <Skeleton width="80%" height={16} sx={{ mb: 4, background: "rgba(0,229,255,0.04)" }} />
       <Box sx={{ display: "flex", gap: 1.5, mb: 4 }}>
-        {[1,2,3].map((i) => <Skeleton key={i} width={120} height={44} sx={{ borderRadius: "2px", background: "rgba(0,229,255,0.05)" }} />)}
+        {[1,2,3].map((i) => (
+          <Skeleton key={i} width={120} height={44} sx={{ borderRadius: "2px", background: "rgba(0,229,255,0.05)" }} />
+        ))}
       </Box>
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.8 }}>
-        {Array.from({ length: 12 }).map((_, i) => (
-          <Skeleton key={i} width={60 + Math.random() * 40} height={24} sx={{ borderRadius: "12px", background: "rgba(0,229,255,0.05)" }} />
+        {[80,60,70,90,65,75,80,60,70,55,85,65].map((w, i) => (
+          <Skeleton key={i} width={w} height={24} sx={{ borderRadius: "12px", background: "rgba(0,229,255,0.05)" }} />
         ))}
       </Box>
     </Box>
   );
 }
 
-/* ── Main Component ──────────────────────────────────────────── */
+/* ── Main ────────────────────────────────────────────────────── */
 export default function Home() {
-  const dispatch = useDispatch();
-  const { data, loading, error } = useSelector((s) => s.home);
-  const heroRef = useRef(null);
+  const [nameTyped, setNameTyped] = useState(false);
+  const dispatch                  = useDispatch();
+  const { data, loading }         = useSelector((s) => s.home);
+  const heroRef                   = useRef(null);
 
   useEffect(() => {
     if (!data) dispatch(fetchHomeData());
@@ -77,12 +78,12 @@ export default function Home() {
   useEffect(() => {
     const el = heroRef.current;
     if (!el) return;
-    el.style.opacity = "0";
+    el.style.opacity   = "0";
     el.style.transform = "translateY(28px)";
     requestAnimationFrame(() => {
       el.style.transition = "opacity 0.9s ease, transform 0.9s ease";
-      el.style.opacity = "1";
-      el.style.transform = "translateY(0)";
+      el.style.opacity    = "1";
+      el.style.transform  = "translateY(0)";
     });
   }, []);
 
@@ -92,6 +93,54 @@ export default function Home() {
     { icon: <EmailOutlined sx={{ fontSize: 18 }} />, href: data.social.email,    label: "Email"    },
   ] : [];
 
+  /* ── Terminal — shared between mobile & desktop ── */
+  const TerminalBlock = () => (
+    <Box sx={{
+      p: 2,
+      border: "1px solid rgba(0,229,255,0.12)", borderRadius: "2px",
+      background: "rgba(5,10,18,0.9)", fontFamily: "'DM Mono',monospace",
+      boxShadow: "inset 0 0 40px rgba(0,0,0,0.4)",
+    }}>
+      {/* Titlebar */}
+      <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2, pb: 1.5, borderBottom: "1px solid rgba(0,229,255,0.08)" }}>
+        {["#FF5F57","#FFBD2E","#28CA41"].map((c) => (
+          <Box key={c} sx={{ width: 10, height: 10, borderRadius: "50%", background: c }} />
+        ))}
+        <Typography sx={{ color: "rgba(0,229,255,0.3)", fontSize: "0.62rem", ml: 1, fontFamily: "'DM Mono',monospace" }}>
+          saood@dev ~ zsh
+        </Typography>
+      </Box>
+
+      {/* Rows — grid so arrow never wraps onto new line */}
+      {data.terminal.map(({ cmd, val }) => (
+        <Box
+          key={cmd}
+          sx={{ mb: 0.8, display: "flex", gap: 0.7, flexWrap: "wrap" }}
+        >
+          <Typography sx={{ color: "#00E5FF", fontSize: "0.70rem", whiteSpace: "nowrap" }}>
+            {cmd}
+          </Typography>
+          <Typography sx={{ color: "rgba(0,229,255,0.35)", fontSize: "0.70rem" }}>
+            →
+          </Typography>
+          <Typography sx={{
+            color:     val.includes("✓") ? "#28CA41" : "text.secondary",
+            fontSize:  "0.70rem",
+            wordBreak: "break-word",
+          }}>
+            {val}
+          </Typography>
+        </Box>
+      ))}
+
+      {/* Cursor row */}
+      <Box sx={{ mt: 1.5, display: "flex", alignItems: "center", gap: 0.5 }}>
+        <Typography sx={{ color: "primary.main", fontSize: "0.72rem" }}>$</Typography>
+        <Cursor />
+      </Box>
+    </Box>
+    
+  );
 
   return (
     <Box sx={{
@@ -101,7 +150,7 @@ export default function Home() {
       py: { xs: 2, md: 3 },
     }}>
 
-      {/* ── Dot-grid bg ── */}
+      {/* Dot-grid bg */}
       <Box aria-hidden sx={{
         position: "absolute", inset: 0, pointerEvents: "none",
         backgroundImage: "radial-gradient(rgba(0,229,255,0.07) 1px, transparent 1px)",
@@ -109,7 +158,7 @@ export default function Home() {
         maskImage: "radial-gradient(ellipse 85% 85% at 50% 50%, black 20%, transparent 100%)",
       }} />
 
-      {/* ── Glow blobs ── */}
+      {/* Glow blobs */}
       <Box aria-hidden sx={{
         position: "absolute", top: "-10%", left: "-5%",
         width: 500, height: 500, borderRadius: "50%",
@@ -152,7 +201,6 @@ export default function Home() {
                       {data.status}
                     </Typography>
                   </Box>
-
                   <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
                     <LocationOnIcon sx={{ fontSize: 14, color: "text.secondary" }} />
                     <Typography sx={{ color: "text.secondary", fontSize: "0.72rem", fontFamily: "'DM Mono',monospace" }}>
@@ -161,35 +209,39 @@ export default function Home() {
                   </Box>
                 </Box>
 
-                {/* Name */}
+                {/* Name block */}
                 <Box sx={{ mb: 3 }}>
-                  <Typography sx={{
-                    color: "text.secondary", fontSize: "0.78rem", letterSpacing: "0.18em",
-                    textTransform: "uppercase", mb: 1, fontFamily: "'DM Mono',monospace",
-                  }}>
-                    {data.role}
-                  </Typography>
+                  {/* Role — type once, stop */}
+                  <TypingText
+                    text={data.role}
+                    speed={55}
+                    loop={true}
+                    sx={{
+                      color: "text.secondary", fontSize: "0.78rem",
+                      letterSpacing: "0.18em", textTransform: "uppercase",
+                      mb: 1, fontFamily: "'DM Mono',monospace",
+                    }}
+                  />
 
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                  <Typography variant="h1" sx={{
-                    fontSize: { xs: "2.5rem", sm: "3.5rem", md: "4.5rem" },
-                    lineHeight: 1, fontWeight: 800, color: "text.primary",
-                  }}>
-                    {data.name.split(" ")[0]} 
+                  {/* Name — gradient, type once, stop */}
+                  <TypingText
+                    text={data.name}
+                    speed={100}
+                    loop={true}
+                    sx={{
+                      fontSize:             { xs: "2.5rem", sm: "3.5rem", md: "4.5rem" },
+                      lineHeight:           1,
+                      fontWeight:           800,
+                      mb:                   1,
+                      background:           "linear-gradient(135deg,#00E5FF 0%,#0091EA 60%,#FF6D00 100%)",
+                      backgroundClip:       "text",
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor:  "transparent",
+                    }}
+                  />
 
-                  </Typography>
-
-                  <Typography variant="h1" sx={{
-                    fontSize: { xs: "2.5rem", sm: "3.5rem", md: "4.5rem" },
-                    lineHeight: 1, fontWeight: 800, mb: 2,
-                    background: "linear-gradient(135deg,#00E5FF 0%,#0091EA 60%,#FF6D00 100%)",
-                    backgroundClip: "text", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
-                  }}>
-                    {data.name.split(" ")[1]}
-                  </Typography>
-                  </Box>
-
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                  {/* Tagline */}
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 2, mt: 1 }}>
                     <Box sx={{ width: 48, height: 2, background: "linear-gradient(90deg,#00E5FF,transparent)" }} />
                     <Typography sx={{ color: "text.secondary", fontSize: "0.72rem", letterSpacing: "0.1em", fontFamily: "'DM Mono',monospace" }}>
                       {data.tagline}
@@ -204,24 +256,18 @@ export default function Home() {
                   borderLeft: "2px solid rgba(0,229,255,0.2)", pl: 2,
                   fontFamily: "'DM Mono',monospace",
                 }}>
-                  {data.bio.split("10K+").map((part, i) =>
-                    i === 0 ? (
-                      <React.Fragment key={i}>
-                        {part.split("high-throughput fintech systems").map((sub, j) =>
-                          j === 0 ? sub : (
-                            <React.Fragment key={j}>
-                              <Box component="span" sx={{ color: "primary.main" }}>high-throughput fintech systems</Box>
-                              {sub}
-                            </React.Fragment>
-                          )
-                        )}
-                      </React.Fragment>
-                    ) : (
-                      <React.Fragment key={i}>
-                        <Box component="span" sx={{ color: "primary.main" }}>10K+</Box>
-                        {part}
-                      </React.Fragment>
-                    )
+                  {["low-latency", "distributed systems", "AI/LLM integrations", "intelligent automation", "LLM integrations", "vector search", "Java", "Python"].reduce(
+                    (acc, keyword) =>
+                      acc.flatMap((part) =>
+                        typeof part !== "string"
+                          ? [part]
+                          : part.split(keyword).flatMap((seg, j, arr) =>
+                              j < arr.length - 1
+                                ? [seg, <Box key={`${keyword}-${j}`} component="span" sx={{ color: "primary.main" }}>{keyword}</Box>]
+                                : [seg]
+                            )
+                      ),
+                    [data.bio]
                   )}
                 </Typography>
 
@@ -236,7 +282,6 @@ export default function Home() {
                     }}>
                     Projects
                   </Button>
-
                   <Button component={Link} to="/contact" variant="outlined"
                     startIcon={<EmailIcon sx={{ fontSize: "16px !important" }} />}
                     sx={{
@@ -246,7 +291,6 @@ export default function Home() {
                     }}>
                     Contact Me
                   </Button>
-
                   <Button component={Link} to="/resume-cover" variant="outlined"
                     startIcon={<ArticleIcon sx={{ fontSize: "16px !important" }} />}
                     sx={{
@@ -279,7 +323,7 @@ export default function Home() {
                 </Box>
 
                 {/* Skill chips */}
-                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.8 }}>
+                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.8, mb: 3 }}>
                   {data.skills.map((skill) => (
                     <Chip key={skill} label={skill} size="small" sx={{
                       background: "rgba(0,229,255,0.04)", border: "1px solid rgba(0,229,255,0.1)",
@@ -288,6 +332,11 @@ export default function Home() {
                       transition: "all 0.2s ease",
                     }} />
                   ))}
+                </Box>
+
+                {/* Terminal — desktop only */}
+                <Box sx={{ display: { xs: "none", md: "block" } }}>
+                  <TerminalBlock />
                 </Box>
               </>
             )}
@@ -303,69 +352,61 @@ export default function Home() {
                   overflow: "hidden", background: "rgba(13,27,42,0.8)",
                   position: "relative",
                 }}>
-                  {/* Corner brackets */}
                   {[
-                    { top: 0, left: 0, borderTop: "2px solid #00E5FF", borderLeft: "2px solid #00E5FF" },
-                    { top: 0, right: 0, borderTop: "2px solid #00E5FF", borderRight: "2px solid #00E5FF" },
-                    { bottom: 0, left: 0, borderBottom: "2px solid #00E5FF", borderLeft: "2px solid #00E5FF" },
+                    { top: 0,    left: 0,  borderTop:    "2px solid #00E5FF", borderLeft:  "2px solid #00E5FF" },
+                    { top: 0,    right: 0, borderTop:    "2px solid #00E5FF", borderRight: "2px solid #00E5FF" },
+                    { bottom: 0, left: 0,  borderBottom: "2px solid #00E5FF", borderLeft:  "2px solid #00E5FF" },
                     { bottom: 0, right: 0, borderBottom: "2px solid #00E5FF", borderRight: "2px solid #00E5FF" },
                   ].map((s, i) => (
                     <Box key={i} sx={{ position: "absolute", width: 16, height: 16, zIndex: 2, ...s }} />
                   ))}
 
+                  <Box
+                    component="img"
+                    src="/src/photo/profilephoto.jpeg"
+                    alt={data.name}
+                    onError={(e) => { e.target.style.display = "none"; }}
+                    sx={{
+                      width: "100%", aspectRatio: "3/4",
+                      objectFit: "cover", objectPosition: "center top",
+                      display: "block", filter: "brightness(0.92) contrast(1.05)",
+                    }}
+                  />
+
+                  {/* Name + role overlay */}
                   <Box sx={{
-                    width: "100%", aspectRatio: "1/1",
-                    display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
-                    background: "linear-gradient(135deg,rgba(0,229,255,0.06) 0%,rgba(13,27,42,0.95) 100%)",
-                    position: "relative", overflow: "hidden",
+                    position: "absolute", bottom: 0, left: 0, right: 0,
+                    px: 2, py: 1.5, zIndex: 1,
+                    background: "linear-gradient(to top, rgba(5,10,18,0.95) 0%, rgba(5,10,18,0.6) 60%, transparent 100%)",
                   }}>
-                    {/* Decorative rings */}
-                    {[120, 180, 240].map((size) => (
-                      <Box key={size} sx={{
-                        position: "absolute", width: size, height: size, borderRadius: "50%",
-                        border: "1px solid rgba(0,229,255,0.07)",
-                        top: "50%", left: "50%", transform: "translate(-50%,-50%)",
-                      }} />
-                    ))}
-
-                    {/* Avatar */}
-                    <Box sx={{
-                      width: 110, height: 110, borderRadius: "50%",
-                      background: "linear-gradient(135deg,rgba(0,229,255,0.15),rgba(0,145,234,0.1))",
-                      border: "2px solid rgba(0,229,255,0.3)",
-                      display: "flex", alignItems: "center", justifyContent: "center",
-                      boxShadow: "0 0 32px rgba(0,229,255,0.15)",
-                      mb: 2, zIndex: 1, position: "relative",
-                      fontSize: "2.4rem", color: "primary.main",
-                      fontFamily: "'DM Mono',monospace", fontWeight: 700,
-                    }}>
-                      {data.initials}
-                    </Box>
-
-                    <Typography sx={{ color: "text.primary", fontSize: "1rem", fontWeight: 700, fontFamily: "'DM Mono',monospace", zIndex: 1, position: "relative" }}>
-                      {data.name}
-                    </Typography>
-                    <Typography sx={{ color: "text.secondary", fontSize: "0.72rem", fontFamily: "'DM Mono',monospace", zIndex: 1, position: "relative", mt: 0.4 }}>
-                      {data.role}
-                    </Typography>
-
-                    {/* Replace photo hint */}
-                    <Box sx={{
-                      position: "absolute", bottom: 12, left: "50%", transform: "translateX(-50%)",
-                      px: 1.5, py: 0.4, background: "rgba(5,10,18,0.85)",
-                      border: "1px dashed rgba(0,229,255,0.25)", borderRadius: "2px", whiteSpace: "nowrap",
-                    }}>
-                      <Typography sx={{ color: "rgba(0,229,255,0.45)", fontSize: "0.6rem", fontFamily: "'DM Mono',monospace" }}>
-                        // replace with your photo
-                      </Typography>
-                    </Box>
+                    <TypingText
+                      text={data.name}
+                      speed={90}
+                      loop={true}
+                      onDone={() => setNameTyped(true)}
+                      sx={{
+                        color: "text.primary", fontSize: "1rem",
+                        fontWeight: 700, fontFamily: "'DM Mono',monospace",
+                      }}
+                    />
+                    {nameTyped && (
+                      <TypingText
+                        text={data.role}
+                        speed={60}
+                        loop={true}
+                        sx={{
+                          color: "text.secondary", fontSize: "0.72rem",
+                          fontFamily: "'DM Mono',monospace", mt: 0.4,
+                        }}
+                      />
+                    )}
                   </Box>
 
                   {/* Status strip */}
                   <Box sx={{
                     py: 1, px: 2, borderTop: "1px solid rgba(0,229,255,0.1)",
                     display: "flex", alignItems: "center", gap: 1, justifyContent: "center",
-                    background: "rgba(5,10,18,0.6)",
+                    background: "rgba(5,10,18,0.6)", position: "relative", zIndex: 1,
                   }}>
                     <Box sx={{ width: 6, height: 6, borderRadius: "50%", background: "#28CA41", boxShadow: "0 0 6px #28CA41" }} />
                     <Typography sx={{ color: "#28CA41", fontSize: "0.65rem", fontFamily: "'DM Mono',monospace" }}>
@@ -398,36 +439,9 @@ export default function Home() {
                   ))}
                 </Box>
 
-                {/* Terminal */}
-                <Box sx={{
-                  p: 2.5, border: "1px solid rgba(0,229,255,0.12)", borderRadius: "2px",
-                  background: "rgba(5,10,18,0.9)", fontFamily: "'DM Mono',monospace",
-                  boxShadow: "inset 0 0 40px rgba(0,0,0,0.4)",
-                }}>
-                  {/* Titlebar */}
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2, pb: 1.5, borderBottom: "1px solid rgba(0,229,255,0.08)" }}>
-                    {["#FF5F57","#FFBD2E","#28CA41"].map((c) => (
-                      <Box key={c} sx={{ width: 10, height: 10, borderRadius: "50%", background: c }} />
-                    ))}
-                    <Typography sx={{ color: "rgba(0,229,255,0.3)", fontSize: "0.62rem", ml: 1, fontFamily: "'DM Mono',monospace" }}>
-                      saood@dev ~ zsh
-                    </Typography>
-                  </Box>
-
-                  {data.terminal.map(({ cmd, val }) => (
-                    <Box key={cmd} sx={{ mb: 0.8, display: "flex", gap: 1, flexWrap: "wrap" }}>
-                      <Typography sx={{ color: "#00E5FF", fontSize: "0.72rem" }}>{cmd}</Typography>
-                      <Typography sx={{ color: "rgba(0,229,255,0.35)", fontSize: "0.72rem" }}>→</Typography>
-                      <Typography sx={{ color: val.includes("✓") ? "#28CA41" : "text.secondary", fontSize: "0.72rem" }}>
-                        {val}
-                      </Typography>
-                    </Box>
-                  ))}
-
-                  <Box sx={{ mt: 1.5, display: "flex", alignItems: "center", gap: 0.5 }}>
-                    <Typography sx={{ color: "primary.main", fontSize: "0.72rem" }}>$</Typography>
-                    <Cursor />
-                  </Box>
+                {/* Terminal — mobile only, after stats */}
+                <Box sx={{ display: { xs: "block", md: "none" } }}>
+                  <TerminalBlock />
                 </Box>
               </>
             )}

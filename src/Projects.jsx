@@ -166,7 +166,7 @@ export default function Projects() {
     <Box sx={{ py: 3 }}>
       <Container maxWidth="lg">
         {/* Header */}
-        <Box sx={{ display: "flex", justifyContent: "space-between", mb: 5 }}>
+        <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
         
           <SectionHeader title= "Featured" accent= "Work"></SectionHeader>
 
