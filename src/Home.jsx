@@ -273,14 +273,14 @@ export default function Home() {
 
                 {/* CTA buttons */}
                 <Box sx={{ display: "flex", gap: 1.5, flexWrap: "wrap", mb: 4 }}>
-                  <Button component={Link} to="/projects" variant="contained"
+                  <Button component={Link} to="/experience" variant="contained"
                     endIcon={<ArrowForwardIcon />}
                     sx={{
                       background: "linear-gradient(135deg,#00E5FF,#0091EA)", color: "#050A12", fontWeight: 700,
                       "&:hover": { background: "linear-gradient(135deg,#33EAFF,#00B0FF)", transform: "translateY(-2px)", boxShadow: "0 10px 28px rgba(0,229,255,0.3)" },
                       transition: "all 0.25s ease",
                     }}>
-                    Projects
+                    Work History
                   </Button>
                   <Button component={Link} to="/contact" variant="outlined"
                     startIcon={<EmailIcon sx={{ fontSize: "16px !important" }} />}
