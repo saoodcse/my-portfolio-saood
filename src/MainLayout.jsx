@@ -29,12 +29,22 @@ export default function MainLayout() {
         background:"rgba(13,27,42,0.5)", backdropFilter:"blur(8px)",
       }}>
         <Container maxWidth="lg">
-          <Box sx={{ display:"flex", flexDirection:{ xs:"column", sm:"row" }, alignItems:"center", justifyContent:"space-between", gap:2 }}>
+          <Box sx={{
+            display:"flex",
+            flexDirection:{ xs:"column", sm:"row" },
+            alignItems:"center",
+            justifyContent:"space-between",
+            gap:2,
+          }}>
+            {/* FIX: proper spacing around em-dash */}
             <Typography sx={{ color:"text.secondary", fontSize:"0.72rem", fontFamily:"'DM Mono',monospace" }}>
               © {new Date().getFullYear()}{" "}
               <Box component="span" sx={{ color:"primary.main" }}>Saood Alam</Box>
-              {" "}— Senior SDE · Mumbai
+              {" — "}
+              <Box component="span" sx={{ color:"text.secondary" }}>Senior SDE · Mumbai</Box>
             </Typography>
+
+            {/* FIX: aria-label on every icon button */}
             <Box sx={{ display:"flex", gap:0.5 }}>
               {[
                 { icon:<GitHubIcon fontSize="small" />,   label:"GitHub",   href:"https://github.com/saoodcse" },
@@ -42,8 +52,18 @@ export default function MainLayout() {
                 { icon:<EmailIcon fontSize="small" />,    label:"Email",    href:"mailto:saoodalamcse2018@gmail.com" },
               ].map(({ icon, label, href }) => (
                 <Tooltip key={label} title={label} placement="top">
-                  <IconButton component="a" href={href} target="_blank" rel="noopener noreferrer" size="small"
-                    sx={{ color:"text.secondary", "&:hover":{ color:"primary.main", background:"rgba(0,229,255,0.08)" }, transition:"all 0.2s ease" }}>
+                  <IconButton
+                    component="a"
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    size="small"
+                    aria-label={label}
+                    sx={{
+                      color:"text.secondary",
+                      "&:hover":{ color:"primary.main", background:"rgba(0,229,255,0.08)" },
+                      transition:"all 0.2s ease",
+                    }}>
                     {icon}
                   </IconButton>
                 </Tooltip>

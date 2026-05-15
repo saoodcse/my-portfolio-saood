@@ -5,6 +5,10 @@ import {
   Box, Container, Typography, Button, Chip, Skeleton,
 } from "@mui/material";
 import ArrowForwardIcon  from "@mui/icons-material/ArrowForward";
+import PersonIcon from '@mui/icons-material/Person';
+import { motion } from "framer-motion";
+import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
+import WorkHistoryIcon from '@mui/icons-material/WorkHistory';
 import EmailIcon         from "@mui/icons-material/Email";
 import ArticleIcon       from "@mui/icons-material/Article";
 import GitHubIcon        from "@mui/icons-material/GitHub";
@@ -144,7 +148,7 @@ export default function Home() {
 
   return (
     <Box sx={{
-      minHeight: "calc(100vh - 64px)",
+      // minHeight: "calc(100vh - 10px)",
       display: "flex", alignItems: "center",
       position: "relative", overflow: "hidden",
       py: { xs: 2, md: 3 },
@@ -271,36 +275,177 @@ export default function Home() {
                   )}
                 </Typography>
 
-                {/* CTA buttons */}
-                <Box sx={{ display: "flex", gap: 1.5, flexWrap: "wrap", mb: 4 }}>
-                  <Button component={Link} to="/experience" variant="contained"
-                    endIcon={<ArrowForwardIcon />}
-                    sx={{
-                      background: "linear-gradient(135deg,#00E5FF,#0091EA)", color: "#050A12", fontWeight: 700,
-                      "&:hover": { background: "linear-gradient(135deg,#33EAFF,#00B0FF)", transform: "translateY(-2px)", boxShadow: "0 10px 28px rgba(0,229,255,0.3)" },
-                      transition: "all 0.25s ease",
-                    }}>
-                    Work History
-                  </Button>
-                  <Button component={Link} to="/contact" variant="outlined"
-                    startIcon={<EmailIcon sx={{ fontSize: "16px !important" }} />}
-                    sx={{
-                      borderColor: "rgba(0,229,255,0.3)", color: "text.secondary",
-                      "&:hover": { borderColor: "primary.main", color: "primary.main", background: "rgba(0,229,255,0.06)", transform: "translateY(-2px)" },
-                      transition: "all 0.25s ease",
-                    }}>
-                    Contact Me
-                  </Button>
-                  <Button component={Link} to="/resume-cover" variant="outlined"
-                    startIcon={<ArticleIcon sx={{ fontSize: "16px !important" }} />}
-                    sx={{
-                      borderColor: "rgba(255,109,0,0.3)", color: "text.secondary",
-                      "&:hover": { borderColor: "#FF6D00", color: "#FF6D00", background: "rgba(255,109,0,0.06)", transform: "translateY(-2px)" },
-                      transition: "all 0.25s ease",
-                    }}>
-                    Resume
-                  </Button>
-                </Box>
+
+{/* CTA buttons */}
+<Box
+  sx={{
+    display: "flex",
+    gap: 1.8,
+    flexWrap: "wrap",
+    mb: 4,
+
+    justifyContent: {
+      xs: "space-between", // mobile
+      sm: "flex-start"
+    },
+
+    alignItems: "center",
+  }}
+>
+
+  {/* Career */}
+  <motion.div
+    whileHover={{ y: -6, scale: 1.03 }}
+    whileTap={{ scale: 0.96 }}
+  >
+    <Button
+      component={Link}
+      to="/experience"
+      variant="contained"
+      endIcon={<WorkHistoryIcon />}
+      sx={{
+        position: "relative",
+        overflow: "hidden",
+        px: 2.6,
+        py: 1.2,
+        borderRadius: "14px",
+        background: "linear-gradient(135deg,#00E5FF,#0091EA)",
+        color: "#050A12",
+        fontWeight: 800,
+        letterSpacing: "0.3px",
+        boxShadow: "0 8px 24px rgba(0,229,255,0.22)",
+
+        "&::before": {
+          content: '""',
+          position: "absolute",
+          top: 0,
+          left: "-120%",
+          width: "100%",
+          height: "100%",
+          background:
+            "linear-gradient(90deg,transparent,rgba(255,255,255,0.35),transparent)",
+          transition: "0.7s",
+        },
+
+        "&:hover::before": {
+          left: "120%",
+        },
+
+        "&:hover": {
+          background: "linear-gradient(135deg,#33EAFF,#00B0FF)",
+          boxShadow: "0 14px 34px rgba(0,229,255,0.35)",
+        },
+
+        transition: "all 0.3s ease",
+      }}
+    >
+      Career
+    </Button>
+  </motion.div>
+
+  {/* About */}
+  <motion.div
+    whileHover={{ y: -5, scale: 1.03 }}
+    whileTap={{ scale: 0.96 }}
+  >
+    <Button
+      component={Link}
+      to="/about"
+      variant="outlined"
+      startIcon={<PersonIcon />}
+      sx={{
+        px: 2.5,
+        py: 1.1,
+        borderRadius: "14px",
+        borderColor: "rgba(0,229,255,0.25)",
+        color: "text.secondary",
+        backdropFilter: "blur(10px)",
+        background: "rgba(255,255,255,0.02)",
+
+        "&:hover": {
+          borderColor: "#00E5FF",
+          color: "#00E5FF",
+          background: "rgba(0,229,255,0.08)",
+          boxShadow: "0 10px 26px rgba(0,229,255,0.12)",
+        },
+
+        transition: "all 0.28s ease",
+      }}
+    >
+      About
+    </Button>
+  </motion.div>
+
+  {/* Contact */}
+  <motion.div
+    whileHover={{ y: -5, scale: 1.03 }}
+    whileTap={{ scale: 0.96 }}
+  >
+    <Button
+      component={Link}
+      to="/contact"
+      variant="outlined"
+      startIcon={<AlternateEmailIcon />}
+      sx={{
+        px: 2.5,
+        py: 1.1,
+        borderRadius: "14px",
+        borderColor: "rgba(0,229,255,0.25)",
+        color: "text.secondary",
+        background: "rgba(255,255,255,0.02)",
+
+        "&:hover": {
+          borderColor: "#00E5FF",
+          color: "#00E5FF",
+          background: "rgba(0,229,255,0.08)",
+          boxShadow: "0 10px 26px rgba(0,229,255,0.12)",
+        },
+
+        transition: "all 0.28s ease",
+      }}
+    >
+      Contact
+    </Button>
+  </motion.div>
+
+  {/* Resume */}
+  <motion.div
+    whileHover={{ y: -5, scale: 1.03 }}
+    whileTap={{ scale: 0.96 }}
+  >
+    <Button
+      component={Link}
+      to="/resume-cover"
+      variant="outlined"
+      startIcon={<ArticleIcon />}
+      sx={{
+        px: 2.5,
+        py: 1.1,
+        borderRadius: "14px",
+        borderColor: "rgba(255,109,0,0.3)",
+        color: "text.secondary",
+        background: "rgba(255,255,255,0.02)",
+
+        "&:hover": {
+          borderColor: "#FF6D00",
+          color: "#FF6D00",
+          background: "rgba(255,109,0,0.08)",
+          boxShadow: "0 10px 26px rgba(255,109,0,0.15)",
+        },
+
+        transition: "all 0.28s ease",
+      }}
+    >
+      Resume
+    </Button>
+  </motion.div>
+
+</Box>
+
+
+
+{/* CTA buttons */}
+
 
                 {/* Social icons */}
                 <Box sx={{ display: "flex", gap: 1.5, alignItems: "center", mb: 4 }}>
