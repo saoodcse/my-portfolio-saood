@@ -347,7 +347,7 @@ export default function Navbar() {
               letterSpacing: "0.1em"
             }}
           >
-            SAOOD_DEV
+            saood.ai
           </Typography>
 
           <IconButton

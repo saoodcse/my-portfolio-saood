@@ -82,7 +82,6 @@ export default function About() {
 
         {/* ── PAGE HEADER ── */}
         <Box sx={{ mb: 8 }}>
-  
           <Typography variant="h2" sx={{
             fontSize: { xs: "2.4rem", md: "3.2rem" },
             color: "text.primary", mb: 1, lineHeight: 1.1,
@@ -116,89 +115,94 @@ export default function About() {
         }}>
 
           {/* PHOTO */}
-<Box sx={{
-  width: { xs: "100%", md: 240 }, flexShrink: 0,
-  border: "1px solid rgba(0,229,255,0.18)", borderRadius: "2px",
-  background: "rgba(13,27,42,0.8)", overflow: "hidden",
-  position: "relative",
-}}>
-  {/* corner brackets */}
-  {[
-    { top: 0,    left: 0,  borderTop: "2px solid #00E5FF", borderLeft: "2px solid #00E5FF"   },
-    { top: 0,    right: 0, borderTop: "2px solid #00E5FF", borderRight: "2px solid #00E5FF"  },
-    { bottom: 0, left: 0,  borderBottom: "2px solid #00E5FF", borderLeft: "2px solid #00E5FF"  },
-    { bottom: 0, right: 0, borderBottom: "2px solid #00E5FF", borderRight: "2px solid #00E5FF" },
-  ].map((s, i) => (
-    <Box key={i} sx={{ position: "absolute", width: 14, height: 14, zIndex: 2, ...s }} />
-  ))}
+          <Box sx={{
+            width: { xs: "100%", md: 240 }, flexShrink: 0,
+            border: "1px solid rgba(0,229,255,0.18)", borderRadius: "2px",
+            background: "rgba(13,27,42,0.8)", overflow: "hidden",
+            position: "relative",
+            // ── mobile: photo as CSS background ──
+            backgroundImage: { xs: `url(/photo/profilephoto.jpeg)`, md: "none" },
+            backgroundSize: "cover",
+            backgroundPosition: "center top",
+            minHeight: { xs: 420, md: "auto" },
+          }}>
+            {/* corner brackets */}
+            {[
+              { top: 0,    left: 0,  borderTop: "2px solid #00E5FF", borderLeft: "2px solid #00E5FF"   },
+              { top: 0,    right: 0, borderTop: "2px solid #00E5FF", borderRight: "2px solid #00E5FF"  },
+              { bottom: 0, left: 0,  borderBottom: "2px solid #00E5FF", borderLeft: "2px solid #00E5FF"  },
+              { bottom: 0, right: 0, borderBottom: "2px solid #00E5FF", borderRight: "2px solid #00E5FF" },
+            ].map((s, i) => (
+              <Box key={i} sx={{ position: "absolute", width: 14, height: 14, zIndex: 2, ...s }} />
+            ))}
 
-  {/* ── actual photo ── */}
-  <Box
-    component="img"
-    src="/photo/profilephoto.jpeg"
-    alt="Saood Alam"
-    onError={(e) => { e.target.style.display = "none"; }}
-    sx={{
-      width: "100%",
-      height: "100%",
-      minHeight: 300,
-      objectFit: "cover",
-      objectPosition: "top center",
-      display: "block",
-    }}
-  />
+            {/* photo — hidden on mobile (bg), visible on desktop */}
+            <Box
+              component="img"
+              src="/photo/profilephoto.jpeg"
+              alt="Saood Alam"
+              onError={(e) => { e.target.style.display = "none"; }}
+              sx={{
+                width: "100%",
+                height: "100%",
+                minHeight: 300,
+                objectFit: "cover",
+                objectPosition: "top center",
+                display: { xs: "none", md: "block" },   // ← hidden on mobile
+              }}
+            />
 
-  {/* overlay — name + handle on top of photo */}
-  <Box sx={{
-    position: "absolute",
-    bottom: 36,
-    left: 0, right: 0,
-    display: "flex", flexDirection: "column", alignItems: "center",
-    background: "linear-gradient(0deg, rgba(5,10,18,0.85) 0%, transparent 100%)",
-    pt: 6, pb: 1.5, zIndex: 2,
-  }}>
-    <Typography sx={{
-      color: "text.primary", fontSize: "0.88rem", fontWeight: 700,
-      fontFamily: "'DM Mono',monospace",
-    }}>
-      {loading || !data ? "Saood Alam" : data.name}
-    </Typography>
+            {/* overlay — name + handle on top of photo */}
+            <Box sx={{
+              position: "absolute",
+              bottom: 36,
+              left: 0, right: 0,
+              display: "flex", flexDirection: "column", alignItems: "center",
+              background: "linear-gradient(0deg, rgba(5,10,18,0.85) 0%, transparent 100%)",
+              pt: 6, pb: 1.5, zIndex: 2,
+            }}>
+              <Typography sx={{
+                color: "text.primary", fontSize: "0.88rem", fontWeight: 700,
+                fontFamily: "'DM Mono',monospace",
+              }}>
+                {loading || !data ? "Saood Alam" : data.name}
+              </Typography>
 
-    <Typography sx={{
-      color: "primary.main", fontSize: "0.65rem",
-      fontFamily: "'DM Mono',monospace", mt: 0.3,
-    }}>
-      {loading || !data ? "@saoodcse" : data.handle}
-    </Typography>
+              <Typography sx={{
+                color: "primary.main", fontSize: "0.65rem",
+                fontFamily: "'DM Mono',monospace", mt: 0.3,
+              }}>
+                {loading || !data ? "@saoodcse" : data.handle}
+              </Typography>
 
-    <Box sx={{
-      mt: 1.2, px: 1.5, py: 0.4,
-      background: "rgba(255,109,0,0.15)",
-      border: "1px solid rgba(255,109,0,0.3)", borderRadius: "2px",
-    }}>
-      <Typography sx={{ color: "#FF6D00", fontSize: "0.6rem", fontFamily: "'DM Mono',monospace" }}>
-        🤖 Exploring AI + LLM
-      </Typography>
-    </Box>
-  </Box>
+              <Box sx={{
+                mt: 1.2, px: 1.5, py: 0.4,
+                background: "rgba(255,109,0,0.15)",
+                border: "1px solid rgba(255,109,0,0.3)", borderRadius: "2px",
+              }}>
+                <Typography sx={{ color: "#FF6D00", fontSize: "0.6rem", fontFamily: "'DM Mono',monospace" }}>
+                  🤖 Exploring AI + LLM
+                </Typography>
+              </Box>
+            </Box>
 
-  {/* status strip */}
-  <Box sx={{
-    py: 0.8, px: 2,
-    borderTop: "1px solid rgba(0,229,255,0.1)",
-    display: "flex", alignItems: "center", gap: 1, justifyContent: "center",
-    background: "rgba(5,10,18,0.85)",
-    position: "relative", zIndex: 2,
-  }}>
-    <Box sx={{
-      width: 6, height: 6, borderRadius: "50%",
-      background: "#28CA41", boxShadow: "0 0 6px #28CA41",
-    }} />
-    <Typography sx={{ color: "#28CA41", fontSize: "0.62rem", fontFamily: "'DM Mono',monospace" }}>
-      {loading || !data ? "Available" : data.status}
-    </Typography>
-  </Box>
-</Box>
+            {/* status strip */}
+            <Box sx={{
+              py: 0.8, px: 2,
+              borderTop: "1px solid rgba(0,229,255,0.1)",
+              display: "flex", alignItems: "center", gap: 1, justifyContent: "center",
+              background: "rgba(5,10,18,0.85)",
+              position: "relative", zIndex: 2,
+            }}>
+              <Box sx={{
+                width: 6, height: 6, borderRadius: "50%",
+                background: "#28CA41", boxShadow: "0 0 6px #28CA41",
+              }} />
+              <Typography sx={{ color: "#28CA41", fontSize: "0.62rem", fontFamily: "'DM Mono',monospace" }}>
+                {loading || !data ? "Available" : data.status}
+              </Typography>
+            </Box>
+          </Box>
 
           {/* BIO */}
           <Box sx={{

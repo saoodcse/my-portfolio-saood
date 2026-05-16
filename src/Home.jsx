@@ -71,6 +71,7 @@ function LeftSkeleton() {
 /* ── Main ────────────────────────────────────────────────────── */
 export default function Home() {
   const [nameTyped, setNameTyped] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);           // ← CHANGE 1: popup state
   const dispatch                  = useDispatch();
   const { data, loading }         = useSelector((s) => s.home);
   const heroRef                   = useRef(null);
@@ -89,6 +90,12 @@ export default function Home() {
       el.style.opacity    = "1";
       el.style.transform  = "translateY(0)";
     });
+  }, []);
+
+  // ← CHANGE 1: show popup after 30 seconds
+  useEffect(() => {
+    const timer = setTimeout(() => setShowPopup(true), 4000);
+    return () => clearTimeout(timer);
   }, []);
 
   const SOCIAL_ICONS = data ? [
@@ -115,7 +122,7 @@ export default function Home() {
         </Typography>
       </Box>
 
-      {/* Rows — grid so arrow never wraps onto new line */}
+      {/* Rows */}
       {data.terminal.map(({ cmd, val }) => (
         <Box
           key={cmd}
@@ -143,12 +150,10 @@ export default function Home() {
         <Cursor />
       </Box>
     </Box>
-    
   );
 
   return (
     <Box sx={{
-      // minHeight: "calc(100vh - 10px)",
       display: "flex", alignItems: "center",
       position: "relative", overflow: "hidden",
       py: { xs: 2, md: 3 },
@@ -215,7 +220,6 @@ export default function Home() {
 
                 {/* Name block */}
                 <Box sx={{ mb: 3 }}>
-                  {/* Role — type once, stop */}
                   <TypingText
                     text={data.role}
                     speed={55}
@@ -226,8 +230,6 @@ export default function Home() {
                       mb: 1, fontFamily: "'DM Mono',monospace",
                     }}
                   />
-
-                  {/* Name — gradient, type once, stop */}
                   <TypingText
                     text={data.name}
                     speed={100}
@@ -243,8 +245,6 @@ export default function Home() {
                       WebkitTextFillColor:  "transparent",
                     }}
                   />
-
-                  {/* Tagline */}
                   <Box sx={{ display: "flex", alignItems: "center", gap: 2, mt: 1 }}>
                     <Box sx={{ width: 48, height: 2, background: "linear-gradient(90deg,#00E5FF,transparent)" }} />
                     <Typography sx={{ color: "text.secondary", fontSize: "0.72rem", letterSpacing: "0.1em", fontFamily: "'DM Mono',monospace" }}>
@@ -275,177 +275,108 @@ export default function Home() {
                   )}
                 </Typography>
 
+                {/* CTA buttons */}
+                <Box
+                  sx={{
+                    display: "flex",
+                    gap: 1.8,
+                    flexWrap: "wrap",
+                    mb: 4,
+                    justifyContent: { xs: "space-between", sm: "flex-start" },
+                    alignItems: "center",
+                  }}
+                >
+                  {/* Career */}
+                  <motion.div whileHover={{ y: -6, scale: 1.03 }} whileTap={{ scale: 0.96 }}>
+                    <Button
+                      component={Link}
+                      to="/experience"
+                      variant="contained"
+                      endIcon={<WorkHistoryIcon />}
+                      sx={{
+                        position: "relative", overflow: "hidden",
+                        px: 2.6, py: 1.2, borderRadius: "14px",
+                        background: "linear-gradient(135deg,#00E5FF,#0091EA)",
+                        color: "#050A12", fontWeight: 800, letterSpacing: "0.3px",
+                        boxShadow: "0 8px 24px rgba(0,229,255,0.22)",
+                        "&::before": {
+                          content: '""', position: "absolute",
+                          top: 0, left: "-120%", width: "100%", height: "100%",
+                          background: "linear-gradient(90deg,transparent,rgba(255,255,255,0.35),transparent)",
+                          transition: "0.7s",
+                        },
+                        "&:hover::before": { left: "120%" },
+                        "&:hover": {
+                          background: "linear-gradient(135deg,#33EAFF,#00B0FF)",
+                          boxShadow: "0 14px 34px rgba(0,229,255,0.35)",
+                        },
+                        transition: "all 0.3s ease",
+                      }}
+                    >
+                      Career
+                    </Button>
+                  </motion.div>
 
-{/* CTA buttons */}
-<Box
-  sx={{
-    display: "flex",
-    gap: 1.8,
-    flexWrap: "wrap",
-    mb: 4,
+                  {/* About */}
+                  <motion.div whileHover={{ y: -5, scale: 1.03 }} whileTap={{ scale: 0.96 }}>
+                    <Button
+                      component={Link} to="/about" variant="outlined" startIcon={<PersonIcon />}
+                      sx={{
+                        px: 2.5, py: 1.1, borderRadius: "14px",
+                        borderColor: "rgba(0,229,255,0.25)", color: "text.secondary",
+                        backdropFilter: "blur(10px)", background: "rgba(255,255,255,0.02)",
+                        "&:hover": {
+                          borderColor: "#00E5FF", color: "#00E5FF",
+                          background: "rgba(0,229,255,0.08)",
+                          boxShadow: "0 10px 26px rgba(0,229,255,0.12)",
+                        },
+                        transition: "all 0.28s ease",
+                      }}
+                    >
+                      About
+                    </Button>
+                  </motion.div>
 
-    justifyContent: {
-      xs: "space-between", // mobile
-      sm: "flex-start"
-    },
+                  {/* Contact */}
+                  <motion.div whileHover={{ y: -5, scale: 1.03 }} whileTap={{ scale: 0.96 }}>
+                    <Button
+                      component={Link} to="/contact" variant="outlined" startIcon={<AlternateEmailIcon />}
+                      sx={{
+                        px: 2.5, py: 1.1, borderRadius: "14px",
+                        borderColor: "rgba(0,229,255,0.25)", color: "text.secondary",
+                        background: "rgba(255,255,255,0.02)",
+                        "&:hover": {
+                          borderColor: "#00E5FF", color: "#00E5FF",
+                          background: "rgba(0,229,255,0.08)",
+                          boxShadow: "0 10px 26px rgba(0,229,255,0.12)",
+                        },
+                        transition: "all 0.28s ease",
+                      }}
+                    >
+                      Contact
+                    </Button>
+                  </motion.div>
 
-    alignItems: "center",
-  }}
->
-
-  {/* Career */}
-  <motion.div
-    whileHover={{ y: -6, scale: 1.03 }}
-    whileTap={{ scale: 0.96 }}
-  >
-    <Button
-      component={Link}
-      to="/experience"
-      variant="contained"
-      endIcon={<WorkHistoryIcon />}
-      sx={{
-        position: "relative",
-        overflow: "hidden",
-        px: 2.6,
-        py: 1.2,
-        borderRadius: "14px",
-        background: "linear-gradient(135deg,#00E5FF,#0091EA)",
-        color: "#050A12",
-        fontWeight: 800,
-        letterSpacing: "0.3px",
-        boxShadow: "0 8px 24px rgba(0,229,255,0.22)",
-
-        "&::before": {
-          content: '""',
-          position: "absolute",
-          top: 0,
-          left: "-120%",
-          width: "100%",
-          height: "100%",
-          background:
-            "linear-gradient(90deg,transparent,rgba(255,255,255,0.35),transparent)",
-          transition: "0.7s",
-        },
-
-        "&:hover::before": {
-          left: "120%",
-        },
-
-        "&:hover": {
-          background: "linear-gradient(135deg,#33EAFF,#00B0FF)",
-          boxShadow: "0 14px 34px rgba(0,229,255,0.35)",
-        },
-
-        transition: "all 0.3s ease",
-      }}
-    >
-      Career
-    </Button>
-  </motion.div>
-
-  {/* About */}
-  <motion.div
-    whileHover={{ y: -5, scale: 1.03 }}
-    whileTap={{ scale: 0.96 }}
-  >
-    <Button
-      component={Link}
-      to="/about"
-      variant="outlined"
-      startIcon={<PersonIcon />}
-      sx={{
-        px: 2.5,
-        py: 1.1,
-        borderRadius: "14px",
-        borderColor: "rgba(0,229,255,0.25)",
-        color: "text.secondary",
-        backdropFilter: "blur(10px)",
-        background: "rgba(255,255,255,0.02)",
-
-        "&:hover": {
-          borderColor: "#00E5FF",
-          color: "#00E5FF",
-          background: "rgba(0,229,255,0.08)",
-          boxShadow: "0 10px 26px rgba(0,229,255,0.12)",
-        },
-
-        transition: "all 0.28s ease",
-      }}
-    >
-      About
-    </Button>
-  </motion.div>
-
-  {/* Contact */}
-  <motion.div
-    whileHover={{ y: -5, scale: 1.03 }}
-    whileTap={{ scale: 0.96 }}
-  >
-    <Button
-      component={Link}
-      to="/contact"
-      variant="outlined"
-      startIcon={<AlternateEmailIcon />}
-      sx={{
-        px: 2.5,
-        py: 1.1,
-        borderRadius: "14px",
-        borderColor: "rgba(0,229,255,0.25)",
-        color: "text.secondary",
-        background: "rgba(255,255,255,0.02)",
-
-        "&:hover": {
-          borderColor: "#00E5FF",
-          color: "#00E5FF",
-          background: "rgba(0,229,255,0.08)",
-          boxShadow: "0 10px 26px rgba(0,229,255,0.12)",
-        },
-
-        transition: "all 0.28s ease",
-      }}
-    >
-      Contact
-    </Button>
-  </motion.div>
-
-  {/* Resume */}
-  <motion.div
-    whileHover={{ y: -5, scale: 1.03 }}
-    whileTap={{ scale: 0.96 }}
-  >
-    <Button
-      component={Link}
-      to="/resume-cover"
-      variant="outlined"
-      startIcon={<ArticleIcon />}
-      sx={{
-        px: 2.5,
-        py: 1.1,
-        borderRadius: "14px",
-        borderColor: "rgba(255,109,0,0.3)",
-        color: "text.secondary",
-        background: "rgba(255,255,255,0.02)",
-
-        "&:hover": {
-          borderColor: "#FF6D00",
-          color: "#FF6D00",
-          background: "rgba(255,109,0,0.08)",
-          boxShadow: "0 10px 26px rgba(255,109,0,0.15)",
-        },
-
-        transition: "all 0.28s ease",
-      }}
-    >
-      Resume
-    </Button>
-  </motion.div>
-
-</Box>
-
-
-
-{/* CTA buttons */}
-
+                  {/* Resume */}
+                  <motion.div whileHover={{ y: -5, scale: 1.03 }} whileTap={{ scale: 0.96 }}>
+                    <Button
+                      component={Link} to="/resume-cover" variant="outlined" startIcon={<ArticleIcon />}
+                      sx={{
+                        px: 2.5, py: 1.1, borderRadius: "14px",
+                        borderColor: "rgba(255,109,0,0.3)", color: "text.secondary",
+                        background: "rgba(255,255,255,0.02)",
+                        "&:hover": {
+                          borderColor: "#FF6D00", color: "#FF6D00",
+                          background: "rgba(255,109,0,0.08)",
+                          boxShadow: "0 10px 26px rgba(255,109,0,0.15)",
+                        },
+                        transition: "all 0.28s ease",
+                      }}
+                    >
+                      Resume
+                    </Button>
+                  </motion.div>
+                </Box>
 
                 {/* Social icons */}
                 <Box sx={{ display: "flex", gap: 1.5, alignItems: "center", mb: 4 }}>
@@ -491,12 +422,18 @@ export default function Home() {
           <Box sx={{ width: { xs: "100%", md: "420px" }, display: "flex", flexDirection: "column", gap: 2.5 }}>
             {loading || !data ? <RightSkeleton /> : (
               <>
-                {/* Photo card */}
+                {/* ── CHANGE 2: Photo card — bg image on mobile, <img> on desktop ── */}
                 <Box sx={{
                   border: "1px solid rgba(0,229,255,0.2)", borderRadius: "2px",
                   overflow: "hidden", background: "rgba(13,27,42,0.8)",
                   position: "relative",
+                  // Mobile: photo as CSS background
+                  backgroundImage: { xs: `url(/photo/profilephoto.jpeg)`, md: "none" },
+                  backgroundSize: "cover",
+                  backgroundPosition: "center top",
+                  minHeight: { xs: 420, md: "auto" },
                 }}>
+                  {/* Corner accents */}
                   {[
                     { top: 0,    left: 0,  borderTop:    "2px solid #00E5FF", borderLeft:  "2px solid #00E5FF" },
                     { top: 0,    right: 0, borderTop:    "2px solid #00E5FF", borderRight: "2px solid #00E5FF" },
@@ -506,6 +443,7 @@ export default function Home() {
                     <Box key={i} sx={{ position: "absolute", width: 16, height: 16, zIndex: 2, ...s }} />
                   ))}
 
+                  {/* Image — hidden on mobile (using bg instead), visible on desktop */}
                   <Box
                     component="img"
                     src="/photo/profilephoto.jpeg"
@@ -514,7 +452,8 @@ export default function Home() {
                     sx={{
                       width: "100%", aspectRatio: "3/4",
                       objectFit: "cover", objectPosition: "center top",
-                      display: "block", filter: "brightness(0.92) contrast(1.05)",
+                      display: { xs: "none", md: "block" },        // ← hidden on mobile
+                      filter: "brightness(0.92) contrast(1.05)",
                     }}
                   />
 
@@ -594,6 +533,114 @@ export default function Home() {
 
         </Box>
       </Container>
+
+      {/* ── CHANGE 1: Connect popup — appears after 30 seconds ── */}
+      {showPopup && (
+          <Box
+            sx={{
+              position: "fixed",
+              bottom: 28,
+              left: "50%",
+              transform: "translateX(-50%)",
+              zIndex: 1300,
+              p: 3,
+              width: 280,
+              border: "1px solid rgba(0,229,255,0.25)",
+              borderRadius: "4px",
+              background: "rgba(5,10,18,0.96)",
+              backdropFilter: "blur(20px)",
+              boxShadow: "0 0 40px rgba(0,229,255,0.12), 0 20px 60px rgba(0,0,0,0.6)",
+              animation: "slideUp 0.4s ease",
+              "@keyframes slideUp": {
+                from: { opacity: 0, transform: "translate(-50%, 20px)" },
+                to:   { opacity: 1, transform: "translate(-50%, 0)" },
+              },
+            }}
+          >
+          {/* Corner accents */}
+          {[
+            { top: 0,    left: 0,  borderTop:    "2px solid #00E5FF", borderLeft:  "2px solid #00E5FF" },
+            { top: 0,    right: 0, borderTop:    "2px solid #00E5FF", borderRight: "2px solid #00E5FF" },
+            { bottom: 0, left: 0,  borderBottom: "2px solid #00E5FF", borderLeft:  "2px solid #00E5FF" },
+            { bottom: 0, right: 0, borderBottom: "2px solid #00E5FF", borderRight: "2px solid #00E5FF" },
+          ].map((s, i) => (
+            <Box key={i} sx={{ position: "absolute", width: 10, height: 10, ...s }} />
+          ))}
+
+          {/* Close button */}
+          <Box
+            onClick={() => setShowPopup(false)}
+            sx={{
+              position: "absolute", top: 10, right: 10,
+              width: 22, height: 22,
+              display: "flex", alignItems: "center", justifyContent: "center",
+              cursor: "pointer",
+              color: "text.secondary",
+              fontSize: "0.85rem", lineHeight: 1,
+              border: "1px solid rgba(0,229,255,0.15)",
+              borderRadius: "2px",
+              "&:hover": { color: "primary.main", borderColor: "primary.main", background: "rgba(0,229,255,0.08)" },
+              transition: "all 0.2s",
+            }}
+          >
+            ✕
+          </Box>
+
+          {/* Pulse dot + label */}
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1.5 }}>
+            <Box sx={{
+              width: 7, height: 7, borderRadius: "50%",
+              background: "#28CA41", boxShadow: "0 0 8px #28CA41",
+              animation: "pulse 2s infinite",
+              "@keyframes pulse": { "0%,100%": { opacity: 1 }, "50%": { opacity: 0.35 } },
+            }} />
+            <Typography sx={{
+              color: "primary.main", fontSize: "0.62rem",
+              letterSpacing: "0.14em", fontFamily: "'DM Mono',monospace",
+            }}>
+              OPEN TO CONNECT
+            </Typography>
+          </Box>
+
+          <Typography sx={{
+            color: "text.primary", fontSize: "0.88rem",
+            fontWeight: 700, mb: 0.8, fontFamily: "'DM Mono',monospace",
+          }}>
+            Let's build something.
+          </Typography>
+
+          <Typography sx={{
+            color: "text.secondary", fontSize: "0.72rem",
+            lineHeight: 1.7, mb: 2.5, fontFamily: "'DM Mono',monospace",
+          }}>
+            Open for new roles, freelance &amp; collaborations. Drop a message!
+          </Typography>
+
+          <Button
+            component={Link}
+            to="/contact"
+            onClick={() => setShowPopup(false)}
+            variant="contained"
+            endIcon={<ArrowForwardIcon sx={{ fontSize: 14 }} />}
+            fullWidth
+            sx={{
+              py: 1, borderRadius: "4px",
+              background: "linear-gradient(135deg,#00E5FF,#0091EA)",
+              color: "#050A12", fontWeight: 800, fontSize: "0.72rem",
+              letterSpacing: "0.1em",
+              boxShadow: "0 6px 20px rgba(0,229,255,0.2)",
+              "&:hover": {
+                background: "linear-gradient(135deg,#33EAFF,#00B0FF)",
+                boxShadow: "0 10px 28px rgba(0,229,255,0.35)",
+              },
+              transition: "all 0.25s ease",
+            }}
+          >
+            GET IN TOUCH
+          </Button>
+        </Box>
+      )}
+
     </Box>
   );
 }
